@@ -1,4 +1,8 @@
-🚀 Bacon Maker: The MCP Meta-Orchestrator
+🥓 Bacon Maker: The MCP Meta-Orchestrator 🥓
+
+Stop wrestling with brittle ETL scripts and start sizzling your data pipelines! Bacon Maker brings home the bacon by automating, securing, and orchestrating your database workflows with AI-native precision. Whether you're migrating schemas or building complex data marts, Bacon Maker ensures your operations are crispy, reliable, and perfectly cooked every time.
+
+(Joke of the day: A pig walks into a DBA conference and asks the front desk, "Excuse me, is this where I sign up for the seminar on baconups and porked procedures?")
 
 Bacon Maker is a Metadata-First Orchestration Layer designed specifically for AI Agents. Using the Model Context Protocol (MCP), it acts as a secure, state-aware bridge between Large Language Models and complex database infrastructures (SQLite, MySQL, Teradata).
 
@@ -37,7 +41,6 @@ action_role:
   - "DEVELOP"       # Access to dry_run_job, explain_sql
   - "EXECUTE"       # Access to execute_job (mode='run')
   - "RECOVER"       # Access to execute_job (mode='restart')
-
 
 
 Enforcement: If a Jinja template resolves to an object not matched by domain_role, the rendering engine throws a SECURITY_VIOLATION_ERROR.
@@ -80,7 +83,6 @@ steps:
         restart_condition: "string"    # CEL restart check
 
 
-
 IV. The Execution & Validation Pipeline
 
 When execute_job is called, every SQL statement follows this lifecycle:
@@ -121,7 +123,6 @@ steps:
         injected_failure: true
 
 
-
 2. Transactionality & Guardrails
 
 Rollbacks: Any failure within a transaction_enabled step triggers an automatic DB ROLLBACK.
@@ -150,7 +151,6 @@ Data Type Normalization Macro
     {%- else -%} {{ raw_type | upper }}
     {%- endif -%}
 {% endmacro %}
-
 
 
 Extraction Queries
@@ -268,7 +268,6 @@ npx @modelcontextprotocol/inspector python -m bacon_maker_server
 # npx @modelcontextprotocol/inspector python main.py
 
 
-
 This will provide a GUI where you can manually invoke execute_job, query_dictionary, and other tools, viewing the direct JSON responses returned by the MCP server.
 
 XII. Documentation & Maintenance Requirements
@@ -279,9 +278,9 @@ Living Documentation: This README.md and all inline code documentation must be k
 
 Reference & How-To Manual: A dedicated docs/ directory must be established and maintained. It must contain at minimum:
 
-Reference Manual: Detailed breakdowns of all Jinja contexts, CEL functions, MCP tool definitions, and YAML schema properties.
+Reference Manual (docs/instruction_manual.md): Detailed breakdowns of all Jinja contexts, CEL functions, MCP tool definitions, and YAML schema properties.
 
-How-To Manual: Step-by-step guides covering common tasks, such as: "How to add a new database dialect," "How to create a new job domain," and "How to write a custom Jinja template with loop logic."
+How-To Manual (docs/how_to.md): Step-by-step guides covering common tasks, such as: "How to add a new database dialect," "How to create a new job domain," and "How to write a custom Jinja template with loop logic."
 
 Version Control: Documentation updates must be included in the same git commits as the code changes they describe.
 
@@ -336,3 +335,11 @@ Goal: Expose the engine to external agents.
 Tasks: Wrap the tested engine in the official mcp Python SDK and expose tools (query_dictionary, inspect_job, explain_sql, execute_job).
 
 Testing Gate: Interactive testing using the npx @modelcontextprotocol/inspector.
+
+Phase 6: Documentation & Onboarding (The Polish)
+
+Goal: Establish a comprehensive, living knowledge base for human developers and AI agents.
+
+Tasks: Create the docs/ folder containing an instruction_manual.md (detailing tool definitions, schema properties, and Jinja contexts) and a how_to.md document (step-by-step guides for adding dialects or creating templates). Update the front README.md with final installation instructions.
+
+Testing Gate: Peer or Agent review of documentation to ensure all examples are accurate, formatting is clean, and code snippets run as described.
