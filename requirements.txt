@@ -1,0 +1,11 @@
+mcp
+pydantic
+PyYAML
+python-dotenv
+Jinja2
+cel-python
+sqlfluff
+teradatasql
+mysql-connector-python
+pytest
+pytest-asyncio
