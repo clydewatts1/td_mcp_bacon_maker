@@ -39,6 +39,7 @@ action_role:
   - "RECOVER"       # Access to execute_job (mode='restart')
 
 
+
 Enforcement: If a Jinja template resolves to an object not matched by domain_role, the rendering engine throws a SECURITY_VIOLATION_ERROR.
 
 III. Metadata Hierarchy & Schema
@@ -77,6 +78,7 @@ steps:
         max_rows: integer        
         validation_condition: "string" # CEL post-check
         restart_condition: "string"    # CEL restart check
+
 
 
 IV. The Execution & Validation Pipeline
@@ -119,6 +121,7 @@ steps:
         injected_failure: true
 
 
+
 2. Transactionality & Guardrails
 
 Rollbacks: Any failure within a transaction_enabled step triggers an automatic DB ROLLBACK.
@@ -147,6 +150,7 @@ Data Type Normalization Macro
     {%- else -%} {{ raw_type | upper }}
     {%- endif -%}
 {% endmacro %}
+
 
 
 Extraction Queries
@@ -262,6 +266,7 @@ To spin up the local web-based testing UI, run the following command (requires N
 npx @modelcontextprotocol/inspector python -m bacon_maker_server
 # Alternatively, if running a specific script directly:
 # npx @modelcontextprotocol/inspector python main.py
+
 
 
 This will provide a GUI where you can manually invoke execute_job, query_dictionary, and other tools, viewing the direct JSON responses returned by the MCP server.
