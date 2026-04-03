@@ -1,12 +1,12 @@
-- `[x]` Task 1: Initialize Project Structure & Git
-    - `[x]` Create `antigravity` directory
-    - `[x]` Initialize Git (Verified existing)
-- `[x]` Task 2: Update `README.md`
-- `[x]` Task 3: Create `requirements.txt`
-- `[x]` Task 4: Configure Security (`.gitignore`, `.env.example`)
-- `[x]` Task 5: Set up Python Virtual Environment (`venv`)
-- `[x]` Task 6: Install Dependencies
-- `[x]` Task 7: Verification (`tests/test_env.py` and `pytest`)
-    - `[x]` Create `tests/` directory
-    - `[x]` Create `test_env.py`
-    - `[x]` Run environment verification tests
+- `[x]` Task 1: Create `antigravity/schemas.py`
+    - `[x]` Define User Profile models (`DomainRole`, `UserProfile`)
+    - `[x]` Define Job Metadata models (`ChaosMonkey`, `SqlTemplate`, `Step`, `JobMetadata`)
+- `[x]` Task 2: Create `tests/test_schemas.py`
+    - `[x]` Valid User Profile test
+    - `[x]` Valid Job Metadata test
+    - `[x]` Invalid `job_id` failure test
+    - `[x]` Invalid `step_type` failure test
+- `[x]` Task 3: Execution & Verification
+    - `[x]` Run `pytest tests/test_schemas.py`
+    - `[x]` Fix `__init__.py` and PYTHONPATH issues
+    - `[x]` Confirm 4 passing tests

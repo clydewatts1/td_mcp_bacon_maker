@@ -1,0 +1,12 @@
+- `[x]` Task 1: Initialize Project Structure & Git
+    - `[x]` Create `antigravity` directory
+    - `[x]` Initialize Git (Verified existing)
+- `[x]` Task 2: Update `README.md`
+- `[x]` Task 3: Create `requirements.txt`
+- `[x]` Task 4: Configure Security (`.gitignore`, `.env.example`)
+- `[x]` Task 5: Set up Python Virtual Environment (`venv`)
+- `[x]` Task 6: Install Dependencies
+- `[x]` Task 7: Verification (`tests/test_env.py` and `pytest`)
+    - `[x]` Create `tests/` directory
+    - `[x]` Create `test_env.py`
+    - `[x]` Run environment verification tests

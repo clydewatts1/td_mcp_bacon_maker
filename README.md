@@ -1,6 +1,6 @@
-# 🚀 Antigravity: The MCP Meta-Orchestrator
+# 🚀 Bacon Maker: The MCP Meta-Orchestrator
 
-Antigravity is a Metadata-First Orchestration Layer designed specifically for AI Agents. Using the Model Context Protocol (MCP), it acts as a secure, state-aware bridge between Large Language Models and complex database infrastructures (SQLite, MySQL, Teradata).
+Bacon Maker is a Metadata-First Orchestration Layer designed specifically for AI Agents. Using the Model Context Protocol (MCP), it acts as a secure, state-aware bridge between Large Language Models and complex database infrastructures (SQLite, MySQL, Teradata).
 
 ## Features
 - **State-Aware Execution:** Robust job tracking and recovery.

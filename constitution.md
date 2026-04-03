@@ -1,6 +1,6 @@
-🚀 Antigravity: The MCP Meta-Orchestrator
+🚀 Bacon Maker: The MCP Meta-Orchestrator
 
-Antigravity is a Metadata-First Orchestration Layer designed specifically for AI Agents. Using the Model Context Protocol (MCP), it acts as a secure, state-aware bridge between Large Language Models and complex database infrastructures (SQLite, MySQL, Teradata).
+Bacon Maker is a Metadata-First Orchestration Layer designed specifically for AI Agents. Using the Model Context Protocol (MCP), it acts as a secure, state-aware bridge between Large Language Models and complex database infrastructures (SQLite, MySQL, Teradata).
 
 It is not just a script runner; it is a self-healing, linting, chaos-tested orchestration engine.
 
@@ -23,7 +23,7 @@ II. Security & User Profiles
 The system uses a strict YAML/JSON User Profile to define the agent's sandbox.
 
 user_id: "agent_alpha_01"
-name: "Antigravity Prod Agent"
+name: "Bacon Maker Prod Agent"
 
 # DOMAIN_ROLE: The Data Sandbox (Uses '%' wildcard)
 domain_role:
@@ -127,7 +127,7 @@ Limits: Long-running queries are killed if they exceed timeout_seconds. Massive 
 
 VI. Offline Mode & Dictionary Extraction
 
-Antigravity operates an "Offline" metadata service so AI agents can brainstorm pipelines without hitting the database. The data_dictionary.yaml is populated using dialect-specific Jinja templates.
+Bacon Maker operates an "Offline" metadata service so AI agents can brainstorm pipelines without hitting the database. The data_dictionary.yaml is populated using dialect-specific Jinja templates.
 
 Data Type Normalization Macro
 
@@ -173,7 +173,7 @@ get_resolved_artifact(job_id, file_name): Read a file from the job_tmp directory
 
 VIII. Python Dependencies & Environment Setup
 
-Antigravity requires a robust, async-ready Python environment. Coding agents must provision the following PyPI modules to satisfy the architectural requirements:
+Bacon Maker requires a robust, async-ready Python environment. Coding agents must provision the following PyPI modules to satisfy the architectural requirements:
 
 Core Orchestration & MCP
 
@@ -227,7 +227,7 @@ Clean State: The job_tmp/ directory must be wiped completely at the start of eve
 
 X. Coding Agent Testing Criteria
 
-To ensure Antigravity is rock-solid, coding agents must build a comprehensive automated test suite. "Test, test, and more test" is the rule. The following criteria must be proven with automated tests:
+To ensure Bacon Maker is rock-solid, coding agents must build a comprehensive automated test suite. "Test, test, and more test" is the rule. The following criteria must be proven with automated tests:
 
 1. Unit Testing (The Fundamentals)
 
@@ -259,7 +259,7 @@ Beyond automated unit testing, developers and AI agents must be able to interact
 
 To spin up the local web-based testing UI, run the following command (requires Node.js to be installed):
 
-npx @modelcontextprotocol/inspector python -m antigravity_server
+npx @modelcontextprotocol/inspector python -m bacon_maker_server
 # Alternatively, if running a specific script directly:
 # npx @modelcontextprotocol/inspector python main.py
 
