@@ -1,0 +1,104 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\cw171001\Projects\td_mcp_bacon_maker\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\cw171001\Projects\td_mcp_bacon_maker
+plugins: anyio-4.13.0, asyncio-1.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 24 items
+
+tests/test_unit.py::test_user_profile_validation PASSED                  [  4%]
+tests/test_unit.py::test_job_metadata_validation FAILED                  [  8%]
+tests/test_unit.py::test_cel_evaluation[parameters.env == 'prod'-context0-True] PASSED [ 12%]
+tests/test_unit.py::test_cel_evaluation[trace.status == 'FAILED'-context1-True] PASSED [ 16%]
+tests/test_unit.py::test_cel_evaluation[results.count > 10-context2-True] PASSED [ 20%]
+tests/test_unit.py::test_cel_evaluation[results.count > 10-context3-False] PASSED [ 25%]
+tests/test_unit.py::test_cel_evaluation[parameters.nested.val == 1-context4-True] PASSED [ 29%]
+tests/test_unit.py::test_cel_evaluation[None-context5-True] PASSED       [ 33%]
+tests/test_unit.py::test_cel_evaluation[-context6-True] PASSED           [ 37%]
+tests/test_unit.py::test_dialect_mapping[teradata-I-INTEGER] PASSED      [ 41%]
+tests/test_unit.py::test_dialect_mapping[teradata-I1-INTEGER] PASSED     [ 45%]
+tests/test_unit.py::test_dialect_mapping[teradata-DA-DATE] PASSED        [ 50%]
+tests/test_unit.py::test_dialect_mapping[teradata-CV-STRING] PASSED      [ 54%]
+tests/test_unit.py::test_dialect_mapping[mysql-int-INTEGER] PASSED       [ 58%]
+tests/test_unit.py::test_dialect_mapping[mysql-bigint-INTEGER] PASSED    [ 62%]
+tests/test_unit.py::test_dialect_mapping[mysql-varchar-STRING] PASSED    [ 66%]
+tests/test_unit.py::test_dialect_mapping[mysql-text-STRING] PASSED       [ 70%]
+tests/test_unit.py::test_dialect_mapping[unknown-MY_TYPE-MY_TYPE] PASSED [ 75%]
+tests/test_integration.py::test_long_multistep_success PASSED            [ 79%]
+tests/test_integration.py::test_linting_gate_halts_execution PASSED      [ 83%]
+tests/test_integration.py::test_deep_transaction_integrity PASSED        [ 87%]
+tests/test_edge_cases.py::test_security_sandbox_advanced PASSED          [ 91%]
+tests/test_edge_cases.py::test_chaos_monkey_total_failure PASSED         [ 95%]
+tests/test_edge_cases.py::test_job_recovery_logic FAILED                 [100%]
+
+================================== FAILURES ===================================
+________________________ test_job_metadata_validation _________________________
+
+    def test_job_metadata_validation():
+        """Exhaustive validation of JobMetadata schema."""
+        valid_job = {
+            "job_id": "j01", "job_name": "Test Job", "global_sql_validation": True,
+            "parameters": {"env": "prod"},
+            "steps": [
+                {
+                    "step_id": "s01", "step_type": "SIMPLE",
+                    "sql_templates": [{"name": "t1", "template_ref": "SELECT 1;", "lint_enabled": True}]
+                }
+            ]
+        }
+>       assert JobMetadata(**valid_job).job_id == "j01"
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for JobMetadata
+E       steps.0.transaction_enabled
+E         Field required [type=missing, input_value={'step_id': 's01', 'step_... 'lint_enabled': True}]}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.12/v/missing
+
+tests\test_unit.py:46: ValidationError
+___________________________ test_job_recovery_logic ___________________________
+
+db = <sqlite3.Connection object at 0x000002684BC673D0>
+
+    def test_job_recovery_logic(db):
+        """Verify that mode='restart' skips successful steps and uses run_on_restart logic."""
+        # step_01 will succeed, step_02 will fail in run 1, then succeed in run 2.
+        db.execute("CREATE TABLE recovery (step_id TEXT);")
+        db.commit()
+    
+        job_config = {
+            "job_id": "recovery_test",
+            "steps": [
+                {
+                    "step_id": "step_01",
+                    "run_condition": "True",
+                    "run_on_restart": "False", # Should skip on restart
+                    "sql_templates": [{"name": "i1", "template_ref": "INSERT INTO recovery VALUES ('S1');", "lint_enabled": False}]
+                },
+                {
+                    "step_id": "step_02",
+                    "run_condition": "True",
+                    "run_on_restart": "True", # Should run on restart
+                    "sql_templates": [{"name": "i2", "template_ref": "INSERT INTO recovery VALUES ('S2');", "lint_enabled": False}]
+                }
+            ]
+        }
+    
+        # RUN 1: Inject failure manually in step 2 (mangled SQL)
+        fail_config = job_config.copy()
+        fail_config["steps"][1]["sql_templates"][0]["template_ref"] = "INSERT INTOO fail;"
+        trace1 = execute_job(fail_config, db)
+        assert trace1["status"] == "FAILED"
+>       assert trace1["steps"]["step_01"]["status"] == "SUCCESS"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'step_01'
+
+tests\test_edge_cases.py:72: KeyError
+============================== warnings summary ===============================
+bacon_maker\schemas.py:4
+  C:\Users\cw171001\Projects\td_mcp_bacon_maker\bacon_maker\schemas.py:4: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class DomainRole(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_unit.py::test_job_metadata_validation - pydantic_core._pyda...
+FAILED tests/test_edge_cases.py::test_job_recovery_logic - KeyError: 'step_01'
+=================== 2 failed, 22 passed, 1 warning in 0.96s ===================
